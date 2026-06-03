@@ -1,0 +1,103 @@
+  KYC stands for Know Your Customer. Financial institutions use KYC procedures to verify the identity of customers before providing services.
+
+Customer identification helps prevent fraud, identity theft, money laundering, and terrorist financing.
+
+Common KYC documents include government-issued identification, proof of address, and recent photographs.
+
+Financial institutions should verify customer information before opening an account.
+
+Risk-based customer due diligence is an important part of modern compliance programs.
+
+Customers may be classified as low, medium, or high risk depending on their profile and transaction behavior.
+
+Politically Exposed Persons (PEPs) often require enhanced due diligence because they may present higher corruption risks.
+
+Enhanced Due Diligence (EDD) involves collecting additional information and performing deeper verification.
+
+Anti-Money Laundering (AML) programs help organizations detect and prevent illegal financial activities.
+
+Money laundering generally involves placement, layering, and integration of illicit funds.
+
+Suspicious transaction monitoring is a key AML control.
+
+Unusually large transactions may require additional review.
+
+Rapid movement of funds between multiple accounts can indicate suspicious behavior.
+
+Frequent transactions just below reporting thresholds may indicate structuring activity.
+
+Transaction monitoring systems analyze patterns, frequency, location, and customer behavior.
+
+Device information can help identify account takeover attempts.
+
+A transaction originating from an unfamiliar device may increase risk.
+
+Geographic risk assessment is commonly used in fraud detection.
+
+Transactions from high-risk regions may require additional scrutiny.
+
+Behavioral analytics compare current actions with historical customer behavior.
+
+A sudden increase in transaction volume may indicate abnormal activity.
+
+Machine learning models can identify anomalies that traditional rules may miss.
+
+Risk scores help prioritize investigations.
+
+A high risk score does not always mean fraud occurred.
+
+Human investigators should review important alerts.
+
+False positives can increase operational costs and customer friction.
+
+Explainable AI helps users understand why a decision was made.
+
+Transparency is important in regulated industries.
+
+Audit trails help organizations demonstrate compliance.
+
+Financial institutions must maintain records of customer activity.
+
+Incident reports provide valuable information for future investigations.
+
+Known fraud patterns can be used to improve detection systems.
+
+Historical fraud cases are useful training data for risk models.
+
+Observability helps monitor system health and performance.
+
+Latency measures how long a system takes to respond.
+
+High error rates may indicate service degradation.
+
+Application logs provide detailed operational information.
+
+Metrics help teams monitor system behavior over time.
+
+Predictive analytics can estimate future risks.
+
+Forecasting models can identify potential fraud spikes.
+
+Capacity planning helps prevent system bottlenecks.
+
+Knowledge graphs represent relationships between entities.
+
+Entities may include customers, accounts, transactions, merchants, devices, and regulations.
+
+Graph analysis can reveal hidden connections between suspicious activities.
+
+Hybrid RAG combines keyword search and semantic search.
+
+Vector databases store document embeddings for similarity retrieval.
+
+Cross-encoder reranking improves retrieval quality.
+
+Evidence-backed responses increase trust in AI systems.
+
+Compliance policies should be regularly updated.
+
+Risk management requires continuous monitoring and improvement.
+
+Strong security controls reduce organizational exposure to threats.
+
+Financial crime prevention requires technology, processes, and human expertise working together.  
