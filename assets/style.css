@@ -1,0 +1,39 @@
+.main {
+    background-color: #0E1117;
+}
+
+.stTextInput input {
+    border-radius: 15px;
+    border: 2px solid #00ffaa;
+    padding: 12px;
+}
+
+.stButton button {
+    background: linear-gradient(90deg, #00ffaa, #00ccff);
+    color: black;
+    border-radius: 12px;
+    height: 50px;
+    font-weight: bold;
+    border: none;
+    width: 100%;
+}
+
+.stButton button:hover {
+    transform: scale(1.02);
+    transition: 0.3s;
+}
+
+.risk-card {
+    background: #161B22;
+    padding: 20px;
+    border-radius: 20px;
+    border-left: 5px solid #00ffaa;
+    margin-top: 20px;
+}
+
+.title-glow {
+    font-size: 50px;
+    font-weight: bold;
+    color: white;
+    text-align: center;
+}

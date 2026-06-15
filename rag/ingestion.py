@@ -1,4 +1,4 @@
-from chunker import chunk_text
+from rag.chunker import chunk_text
 
 with open("documents/financial_knowledge_base.txt", "r", encoding="utf-8") as f:
     text = f.read()

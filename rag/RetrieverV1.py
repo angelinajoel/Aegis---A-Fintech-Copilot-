@@ -1,4 +1,4 @@
-from chunker import chunk_text
+from rag.chunker import chunk_text
 
 
 # Load the knowledge base
