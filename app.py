@@ -68,7 +68,7 @@ with st.sidebar:
     st.markdown("---")
 
     uploaded_file = st.file_uploader(
-        "Upload Compliance PDF",
+        "Upload Compliance PDF",git status
         type=["pdf"]
     )
 
