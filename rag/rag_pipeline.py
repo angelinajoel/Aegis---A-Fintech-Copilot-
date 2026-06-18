@@ -1,66 +1,69 @@
 from rag.Hybrid_retriver import hybrid_search
 from rag.reranker import rerank_results
 from rag.llm import generate_llm_response
-from rag.graphrag import build_graph, get_related_entities
+from rag.risk_engine import calculate_risk_score, get_risk_level
+from rag.query_classifier import classify_query
+
+from rag.graph_store import load_graph
+from rag.graphrag import graph_expand_query
+
+# -----------------------------------------
+# LOAD GRAPH ONCE
+# -----------------------------------------
+
+graph = load_graph()
 
 
 def generate_response(query):
 
-    # -----------------------------------
-    # STEP 1: HYBRID RETRIEVAL
-    # -----------------------------------
+    # GRAPH RAG EXPANSION
+    expanded_query = graph_expand_query(
+        graph,
+        query
+    )
 
-    retrieved_chunks = hybrid_search(query)
+    print(f"\n[Graph Expanded Query]: {expanded_query}")
 
-    # -----------------------------------
-    # STEP 2: RERANKING
-    # -----------------------------------
+    # HYBRID RETRIEVAL
+    retrieved_chunks = hybrid_search(
+        expanded_query
+    )
 
+    # RERANKING
     top_chunks = rerank_results(
         query,
         retrieved_chunks,
         top_k=3
     )
 
-    # -----------------------------------
-    # STEP 3: BUILD KNOWLEDGE GRAPH
-    # -----------------------------------
-
-    build_graph(top_chunks)
-
-    # -----------------------------------
-    # STEP 4: FIND RELATED ENTITIES
-    # -----------------------------------
-
-    related_entities = get_related_entities(query)
-
-    # -----------------------------------
-    # STEP 5: PREPARE EXTRA CONTEXT
-    # -----------------------------------
-
-    graph_context = ""
-
-    if related_entities:
-        graph_context = (
-            "Related Risk Entities:\n"
-            + ", ".join(related_entities)
-        )
-
-    # -----------------------------------
-    # STEP 6: LLM GENERATION
-    # -----------------------------------
-
+    # LLM RESPONSE
     final_response = generate_llm_response(
         query,
-        top_chunks + [graph_context]
+        top_chunks
     )
 
-    return final_response
+    # RISK SCORE
+    risk_score = calculate_risk_score(
+        " ".join(top_chunks)
+    )
 
+    risk_level = get_risk_level(
+        risk_score
+    )
 
-# -----------------------------------
-# MAIN LOOP
-# -----------------------------------
+    # QUERY CATEGORY
+    category = classify_query(
+        query
+    )
+
+    return {
+        "answer": final_response,
+        "evidence": top_chunks,
+        "risk_score": risk_score,
+        "risk_level": risk_level,
+        "category": category
+    }
+
 
 if __name__ == "__main__":
 
@@ -71,11 +74,11 @@ if __name__ == "__main__":
         if query.lower() == "exit":
             break
 
-        answer = generate_response(query)
+        result = generate_response(query)
 
         print("\n")
         print("=" * 60)
         print("Aegis AI Response")
         print("=" * 60)
-        print(answer)
+        print(result["answer"])
         print("=" * 60)

@@ -3,10 +3,10 @@ import spacy
 
 nlp = spacy.load("en_core_web_sm")
 
-graph = nx.Graph()
-
 
 def build_graph(chunks):
+
+    graph = nx.Graph()
 
     for chunk in chunks:
 
@@ -15,7 +15,7 @@ def build_graph(chunks):
         entities = []
 
         for ent in doc.ents:
-            entities.append(ent.text)
+            entities.append(ent.text.lower())
 
         for i in range(len(entities)):
             for j in range(i + 1, len(entities)):
@@ -28,26 +28,31 @@ def build_graph(chunks):
     return graph
 
 
-def get_related_entities(entity):
+def get_related_entities(graph, query):
 
-    if entity in graph:
-        return list(graph.neighbors(entity))
+    query = query.lower()
 
-    return []
+    related = set()
+
+    for node in graph.nodes:
+
+        if query in node:
+
+            neighbors = list(graph.neighbors(node))
+
+            for n in neighbors:
+                related.add(n)
+
+    return list(related)
 
 
-import matplotlib.pyplot as plt
+def graph_expand_query(graph, query):
 
-
-def visualize_graph():
-
-    plt.figure(figsize=(12, 8))
-
-    nx.draw(
+    related_entities = get_related_entities(
         graph,
-        with_labels=True,
-        node_size=2000,
-        font_size=10
+        query
     )
 
-    plt.show()
+    expanded_query = query + " " + " ".join(related_entities)
+
+    return expanded_query

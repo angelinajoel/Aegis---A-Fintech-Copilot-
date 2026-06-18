@@ -88,19 +88,49 @@ if st.button("Analyze Risk"):
 
     if query:
 
-        with st.spinner("Running Hybrid RAG Pipeline..."):
+        with st.spinner("Analyzing Financial Risk Intelligence..."):
 
-            response = generate_response(query)
+            response, evidence = generate_response(query)
 
-        st.markdown(
-            f"""
-            <div class="risk-card">
-                <h2>AI Risk Analysis</h2>
-                <p>{response}</p>
-            </div>
-            """,
-            unsafe_allow_html=True
+        confidence = min(
+            75 + len(evidence) * 5,
+            95
         )
+
+        # MAIN ANSWER CARD
+        st.markdown("## 🛡️ Aegis Analysis")
+
+        st.markdown(response)
+
+        # METRICS
+        col1, col2 = st.columns(2)
+
+        with col1:
+            st.metric(
+                "Confidence Score",
+                f"{confidence}%"
+            )
+
+        with col2:
+            st.metric(
+                "Evidence Sources",
+                len(evidence)
+            )
+
+        # EVIDENCE PANEL
+        with st.expander("📚 Sources Used by Aegis"):
+
+            st.markdown(
+                """
+                These knowledge sources were retrieved and used
+                by Aegis to generate the response.
+                """
+            )
+
+            for source in evidence:
+
+                st.markdown("---")
+                st.write(source)
 
 # ---------------------------------
 # FOOTER
