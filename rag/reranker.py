@@ -7,7 +7,12 @@ reranker = CrossEncoder(
 )
 
 
-def rerank_results(query, retrieved_chunks, top_k=3):
+# CHANGED: now accepts the chroma similarity scores alongside the chunks,
+# and returns a list of dicts (chunk, chroma_similarity, rerank_score)
+# instead of bare chunk strings. Sort order/behavior is unchanged —
+# we still rank by the cross-encoder's rerank score, just no longer
+# throw the scores away afterward.
+def rerank_results(query, retrieved_chunks, chroma_similarities, top_k=3):
 
     # Create query-chunk pairs
     pairs = []
@@ -17,22 +22,35 @@ def rerank_results(query, retrieved_chunks, top_k=3):
         pairs.append([query, chunk])
 
     # Predict relevance scores
-    scores = reranker.predict(pairs)
+    raw_scores = reranker.predict(pairs)
 
-    # Combine chunks with scores
-    scored_chunks = list(zip(retrieved_chunks, scores))
+    # Cross-encoder scores are unbounded logits; squash to 0-100 for display.
+    # Ranking order is identical either way — this is presentation only.
+    def to_pct(s):
+        import math
+        return round(100 / (1 + math.exp(-s)), 1)
 
-    # Sort by score descending
+    # Combine chunk + both scores
+    scored_chunks = list(zip(
+        retrieved_chunks,
+        chroma_similarities,
+        raw_scores
+    ))
+
+    # Sort by rerank score descending (unchanged behavior)
     scored_chunks.sort(
-        key=lambda x: x[1],
+        key=lambda x: x[2],
         reverse=True
     )
 
-    # Return top chunks
     top_chunks = []
 
-    for chunk, score in scored_chunks[:top_k]:
+    for chunk, chroma_sim, rerank_score in scored_chunks[:top_k]:
 
-        top_chunks.append(chunk)
+        top_chunks.append({
+            "text": chunk,
+            "chroma_similarity": chroma_sim,
+            "rerank_score": to_pct(rerank_score)
+        })
 
     return top_chunks

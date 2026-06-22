@@ -5,7 +5,7 @@ from rag.risk_engine import calculate_risk_score, get_risk_level
 from rag.query_classifier import classify_query
 
 from rag.graph_store import load_graph
-from rag.graphrag import graph_expand_query
+from rag.graphrag import graph_expand_query, get_traversed_subgraph
 
 # -----------------------------------------
 # LOAD GRAPH ONCE
@@ -22,29 +22,43 @@ def generate_response(query):
         query
     )
 
+    # NEW: capture the actual subgraph traversed (nodes + edges) so the
+    # UI can draw it, instead of only having the flattened expanded
+    # query string.
+    subgraph = get_traversed_subgraph(
+        graph,
+        query
+    )
+
     print(f"\n[Graph Expanded Query]: {expanded_query}")
 
     # HYBRID RETRIEVAL
-    retrieved_chunks = hybrid_search(
+    # CHANGED: now returns (chunks, chroma_similarities) instead of just chunks
+    retrieved_chunks, chroma_similarities = hybrid_search(
         expanded_query
     )
 
     # RERANKING
-    top_chunks = rerank_results(
+    # CHANGED: now also receives chroma_similarities, and returns a list of
+    # dicts carrying both scores instead of bare strings
+    scored_chunks = rerank_results(
         query,
         retrieved_chunks,
+        chroma_similarities,
         top_k=3
     )
+
+    top_chunk_texts = [c["text"] for c in scored_chunks]
 
     # LLM RESPONSE
     final_response = generate_llm_response(
         query,
-        top_chunks
+        top_chunk_texts
     )
 
     # RISK SCORE
     risk_score = calculate_risk_score(
-        " ".join(top_chunks)
+        " ".join(top_chunk_texts)
     )
 
     risk_level = get_risk_level(
@@ -58,10 +72,16 @@ def generate_response(query):
 
     return {
         "answer": final_response,
-        "evidence": top_chunks,
+        "evidence": top_chunk_texts,
+        "scored_evidence": scored_chunks,
         "risk_score": risk_score,
         "risk_level": risk_level,
-        "category": category
+        "category": category,
+        "pipeline_trace": {
+            "original_query": query,
+            "expanded_query": expanded_query,
+            "subgraph": subgraph,
+        }
     }
 
 

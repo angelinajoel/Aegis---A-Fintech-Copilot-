@@ -1,39 +1,269 @@
-.main {
-    background-color: #0E1117;
+/* ===========================================================
+   AEGIS AI — Risk Intelligence Console
+   Design tokens:
+   Base:      #0B0E14
+   Surface:   #121826
+   Border:    #232B3D
+   Text:      #E8EAED
+   Muted:     #8B95A8
+   Accent:    #5EE6C8  (signal / active / online)
+   Alert:     #FF5C5C  (high risk only)
+   Warn:      #F2B84B  (medium risk only)
+=========================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500&display=swap');
+
+html, body, [class*="css"] {
+    font-family: 'Inter', -apple-system, sans-serif;
+}
+
+.stApp {
+    background: #0B0E14;
+    color: #E8EAED;
+}
+
+section[data-testid="stSidebar"] {
+    background: #0D1117;
+    border-right: 1px solid #232B3D;
+}
+
+/* ---------- Brand header ---------- */
+.aegis-brand {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 1.4rem;
+    letter-spacing: 0.02em;
+    color: #E8EAED;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.aegis-brand .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #5EE6C8;
+    box-shadow: 0 0 8px #5EE6C8;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+}
+
+/* ---------- Page hero ---------- */
+.console-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 2.1rem;
+    color: #E8EAED;
+    margin-bottom: 0.1rem;
+    letter-spacing: -0.01em;
+}
+
+.console-subtitle {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.82rem;
+    color: #5EE6C8;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+/* ---------- Panels ---------- */
+.panel {
+    background: #121826;
+    border: 1px solid #232B3D;
+    border-radius: 6px;
+    padding: 1.1rem 1.3rem;
+    margin-bottom: 0.9rem;
+}
+
+.panel-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #8B95A8;
+    margin-bottom: 0.5rem;
+}
+
+/* ---------- Status pills ---------- */
+.status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    color: #5EE6C8;
+    background: rgba(94, 230, 200, 0.08);
+    border: 1px solid rgba(94, 230, 200, 0.25);
+    border-radius: 4px;
+    padding: 0.3rem 0.6rem;
+    margin: 0.15rem 0;
+}
+
+.status-pill .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: #5EE6C8;
+}
+
+/* ---------- Pipeline trace ---------- */
+.trace-step {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    border-left: 2px solid #232B3D;
+    padding-left: 1rem;
+    margin-left: 0.4rem;
+    padding-bottom: 1.1rem;
+    position: relative;
+}
+
+.trace-step.active {
+    border-left: 2px solid #5EE6C8;
+}
+
+.trace-step::before {
+    content: '';
+    position: absolute;
+    left: -5px;
+    top: 2px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #232B3D;
+}
+
+.trace-step.active::before {
+    background: #5EE6C8;
+    box-shadow: 0 0 6px #5EE6C8;
+}
+
+.trace-label {
+    color: #5EE6C8;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+
+.trace-body {
+    color: #C3CAD9;
+    font-size: 0.82rem;
+}
+
+.trace-meta {
+    color: #8B95A8;
+    font-size: 0.74rem;
+    margin-top: 0.2rem;
+}
+
+/* ---------- Evidence cards ---------- */
+.evidence-card {
+    background: #0D1320;
+    border: 1px solid #232B3D;
+    border-left: 3px solid #5EE6C8;
+    border-radius: 4px;
+    padding: 0.7rem 0.9rem;
+    margin-bottom: 0.6rem;
+    font-size: 0.85rem;
+    color: #C3CAD9;
+}
+
+.score-row {
+    display: flex;
+    gap: 1rem;
+    margin-top: 0.4rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: #8B95A8;
+}
+
+.score-chip {
+    background: #121826;
+    border: 1px solid #232B3D;
+    border-radius: 3px;
+    padding: 0.15rem 0.5rem;
+}
+
+/* ---------- Risk badges ---------- */
+.risk-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+    font-size: 0.85rem;
+    padding: 0.3rem 0.8rem;
+    border-radius: 4px;
+    display: inline-block;
+    letter-spacing: 0.05em;
+}
+
+.risk-LOW {
+    background: rgba(94, 230, 200, 0.1);
+    color: #5EE6C8;
+    border: 1px solid rgba(94, 230, 200, 0.3);
+}
+
+.risk-MEDIUM {
+    background: rgba(242, 184, 75, 0.1);
+    color: #F2B84B;
+    border: 1px solid rgba(242, 184, 75, 0.3);
+}
+
+.risk-HIGH {
+    background: rgba(255, 92, 92, 0.1);
+    color: #FF5C5C;
+    border: 1px solid rgba(255, 92, 92, 0.3);
+}
+
+/* ---------- Streamlit overrides ---------- */
+div[data-testid="stMetric"] {
+    background: #121826;
+    border: 1px solid #232B3D;
+    border-radius: 6px;
+    padding: 0.8rem 1rem;
+}
+
+div[data-testid="stMetricLabel"] {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: #8B95A8;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+div[data-testid="stMetricValue"] {
+    font-family: 'Space Grotesk', sans-serif;
+    color: #E8EAED;
 }
 
 .stTextInput input {
-    border-radius: 15px;
-    border: 2px solid #00ffaa;
-    padding: 12px;
+    background: #121826;
+    border: 1px solid #232B3D;
+    color: #E8EAED;
+    font-family: 'JetBrains Mono', monospace;
 }
 
 .stButton button {
-    background: linear-gradient(90deg, #00ffaa, #00ccff);
-    color: black;
-    border-radius: 12px;
-    height: 50px;
-    font-weight: bold;
+    background: #5EE6C8;
+    color: #0B0E14;
     border: none;
-    width: 100%;
+    font-weight: 600;
+    font-family: 'Space Grotesk', sans-serif;
+    border-radius: 4px;
 }
 
 .stButton button:hover {
-    transform: scale(1.02);
-    transition: 0.3s;
+    background: #4DD4B6;
 }
 
-.risk-card {
-    background: #161B22;
-    padding: 20px;
-    border-radius: 20px;
-    border-left: 5px solid #00ffaa;
-    margin-top: 20px;
+hr {
+    border-color: #232B3D !important;
 }
 
-.title-glow {
-    font-size: 50px;
-    font-weight: bold;
-    color: white;
+.empty-state {
+    font-family: 'JetBrains Mono', monospace;
+    color: #4A5468;
     text-align: center;
+    padding: 3rem 1rem;
+    border: 1px dashed #232B3D;
+    border-radius: 6px;
 }

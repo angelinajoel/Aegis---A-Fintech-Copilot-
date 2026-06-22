@@ -5,16 +5,16 @@ def classify_query(query):
     if "kyc" in query:
         return "KYC"
 
-    if "aml" in query:
+    elif "aml" in query:
         return "AML"
 
-    if "fraud" in query:
+    elif "fraud" in query:
         return "Fraud Detection"
 
-    if "compliance" in query:
+    elif "compliance" in query:
         return "Compliance"
 
-    if "risk" in query:
+    elif "risk" in query:
         return "Risk Management"
 
     return "General Intelligence"
