@@ -267,3 +267,43 @@ hr {
     border: 1px dashed #232B3D;
     border-radius: 6px;
 }
+
+/* ---------- Transaction monitor ---------- */
+.flag-card {
+    background: #0D1320;
+    border: 1px solid rgba(255, 92, 92, 0.3);
+    border-left: 3px solid #FF5C5C;
+    border-radius: 4px;
+    padding: 0.8rem 1rem;
+    margin-bottom: 0.6rem;
+}
+
+.flag-card.clear {
+    border: 1px solid rgba(94, 230, 200, 0.3);
+    border-left: 3px solid #5EE6C8;
+}
+
+.contributor-chip {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    background: #121826;
+    border: 1px solid #232B3D;
+    border-radius: 3px;
+    padding: 0.2rem 0.55rem;
+    margin: 0.2rem 0.3rem 0.2rem 0;
+    color: #C3CAD9;
+}
+
+.monitor-stat {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    color: #8B95A8;
+}
+
+div[data-testid="stForm"] {
+    background: #121826;
+    border: 1px solid #232B3D;
+    border-radius: 6px;
+    padding: 1rem 1.2rem;
+}

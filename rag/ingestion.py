@@ -17,13 +17,17 @@ def load_data(folder_path="Documents"):
 
     return "\n".join(documents)
 
-with open("documents/financial_knowledge_base.txt", "r", encoding="utf-8") as f:
-    text = f.read()
 
-chunks = chunk_text(text)
+# Testing
+if __name__ == "__main__":
 
-print(f"Total Chunks: {len(chunks)}")
+    with open("Documents/financial_knowledge_base.txt", "r", encoding="utf-8") as f:
+        text = f.read()
 
-for i, chunk in enumerate(chunks):
-    print(f"\n--- Chunk {i+1} ---")
-    print(chunk)
+    chunks = chunk_text(text)
+
+    print(f"Total Chunks: {len(chunks)}")
+
+    for i, chunk in enumerate(chunks):
+        print(f"\n--- Chunk {i+1} ---")
+        print(chunk)
