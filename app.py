@@ -252,11 +252,16 @@ elif st.session_state.page == "Pipeline Trace":
             unsafe_allow_html=True
         )
 
-        svg = render_subgraph_svg(subgraph)
-        if svg:
+        viz = render_subgraph_svg(subgraph)
+        if viz:
             st.markdown("<div class='panel'>", unsafe_allow_html=True)
             st.markdown("<div class='panel-label'>Knowledge graph — traversed subgraph</div>", unsafe_allow_html=True)
-            st.markdown(svg, unsafe_allow_html=True)
+            st.markdown(viz["svg"], unsafe_allow_html=True)
+            if viz["truncated"]:
+                st.caption(
+                    f"Showing {viz['shown_neighbors']} of this match's neighbors — "
+                    f"some connections were omitted to keep the diagram readable."
+                )
             st.markdown("</div>", unsafe_allow_html=True)
         else:
             st.caption("No entity matches found in the knowledge graph for this query — expansion fell back to the original query alone.")
